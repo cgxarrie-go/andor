@@ -13,6 +13,35 @@ type element[T any] struct {
 	item     T
 }
 
+func New[T any](matchFunc func(T) bool, element element[T]) andor[T] {
+
+	return andor[T]{
+		element:   element,
+		matchFunc: matchFunc,
+	}
+}
+
+func NewAnd[T any](elements []element[T]) element[T] {
+	return element[T]{
+		Type:     elementtype.And,
+		elements: elements,
+	}
+}
+
+func NewOr[T any](elements []element[T]) element[T] {
+	return element[T]{
+		Type:     elementtype.Or,
+		elements: elements,
+	}
+}
+
+func NewItem[T any](item T) element[T] {
+	return element[T]{
+		Type: elementtype.Item,
+		item: item,
+	}
+}
+
 func (ao andor[T]) Match() bool {
 
 	return ao.matchElement(ao.element)

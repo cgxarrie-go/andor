@@ -3,7 +3,7 @@ package andor
 import (
 	"testing"
 
-	"github.com/cgxarrie-go/andor.git/elementtype"
+	"github.com/cgxarrie-go/andor/elementtype"
 	"github.com/stretchr/testify/assert"
 )
 

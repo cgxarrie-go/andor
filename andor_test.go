@@ -30,8 +30,8 @@ func Test_MatchItem(t *testing.T) {
 			// Arrange
 			andor := andor[int16]{
 				element: element[int16]{
-					Type: elementtype.Item,
-					item: 1,
+					elementType: elementtype.Item,
+					item:        1,
 				},
 				matchFunc: func(item int16) bool {
 					return test.funcRetrurn
@@ -54,15 +54,15 @@ func Test_MatchAnd_AllTrue_ShouldReturnTrue(t *testing.T) {
 			return item%2 == 0
 		},
 		element: element[int16]{
-			Type: elementtype.And,
+			elementType: elementtype.And,
 			elements: []element[int16]{
 				{
-					Type: elementtype.Item,
-					item: 2,
+					elementType: elementtype.Item,
+					item:        2,
 				},
 				{
-					Type: elementtype.Item,
-					item: 4,
+					elementType: elementtype.Item,
+					item:        4,
 				},
 			},
 		},
@@ -82,15 +82,15 @@ func Test_MatchAnd_OneFalse_ShouldReturnFalse(t *testing.T) {
 			return item%2 == 0
 		},
 		element: element[int16]{
-			Type: elementtype.And,
+			elementType: elementtype.And,
 			elements: []element[int16]{
 				{
-					Type: elementtype.Item,
-					item: 2,
+					elementType: elementtype.Item,
+					item:        2,
 				},
 				{
-					Type: elementtype.Item,
-					item: 3,
+					elementType: elementtype.Item,
+					item:        3,
 				},
 			},
 		},
@@ -110,15 +110,15 @@ func Test_MatchOr_OneTrue_ShouldReturnTrue(t *testing.T) {
 			return item%2 == 0
 		},
 		element: element[int16]{
-			Type: elementtype.Or,
+			elementType: elementtype.Or,
 			elements: []element[int16]{
 				{
-					Type: elementtype.Item,
-					item: 1,
+					elementType: elementtype.Item,
+					item:        1,
 				},
 				{
-					Type: elementtype.Item,
-					item: 2,
+					elementType: elementtype.Item,
+					item:        2,
 				},
 			},
 		},
@@ -138,15 +138,15 @@ func Test_MatchOr_AllFalse_ShouldReturnFalse(t *testing.T) {
 			return item%2 == 0
 		},
 		element: element[int16]{
-			Type: elementtype.Or,
+			elementType: elementtype.Or,
 			elements: []element[int16]{
 				{
-					Type: elementtype.Item,
-					item: 1,
+					elementType: elementtype.Item,
+					item:        1,
 				},
 				{
-					Type: elementtype.Item,
-					item: 3,
+					elementType: elementtype.Item,
+					item:        3,
 				},
 			},
 		},

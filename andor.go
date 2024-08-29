@@ -8,9 +8,9 @@ type andor[T any] struct {
 }
 
 type element[T any] struct {
-	Type     elementtype.Type
-	elements []element[T]
-	item     T
+	elementType elementtype.Type
+	elements    []element[T]
+	item        T
 }
 
 func New[T any](matchFunc func(T) bool, element element[T]) andor[T] {
@@ -23,22 +23,22 @@ func New[T any](matchFunc func(T) bool, element element[T]) andor[T] {
 
 func And[T any](elements ...element[T]) element[T] {
 	return element[T]{
-		Type:     elementtype.And,
-		elements: elements,
+		elementType: elementtype.And,
+		elements:    elements,
 	}
 }
 
 func Or[T any](elements ...element[T]) element[T] {
 	return element[T]{
-		Type:     elementtype.Or,
-		elements: elements,
+		elementType: elementtype.Or,
+		elements:    elements,
 	}
 }
 
 func Item[T any](item T) element[T] {
 	return element[T]{
-		Type: elementtype.Item,
-		item: item,
+		elementType: elementtype.Item,
+		item:        item,
 	}
 }
 
@@ -50,7 +50,7 @@ func (ao andor[T]) Match() bool {
 
 func (ao andor[T]) matchElement(e element[T]) bool {
 
-	switch e.Type {
+	switch e.elementType {
 	case elementtype.And:
 		return ao.matchAnd(e.elements)
 	case elementtype.Or:

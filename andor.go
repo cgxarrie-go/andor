@@ -21,21 +21,21 @@ func New[T any](matchFunc func(T) bool, element element[T]) andor[T] {
 	}
 }
 
-func NewAnd[T any](elements []element[T]) element[T] {
+func And[T any](elements ...element[T]) element[T] {
 	return element[T]{
 		Type:     elementtype.And,
 		elements: elements,
 	}
 }
 
-func NewOr[T any](elements []element[T]) element[T] {
+func Or[T any](elements ...element[T]) element[T] {
 	return element[T]{
 		Type:     elementtype.Or,
 		elements: elements,
 	}
 }
 
-func NewItem[T any](item T) element[T] {
+func Item[T any](item T) element[T] {
 	return element[T]{
 		Type: elementtype.Item,
 		item: item,

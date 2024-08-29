@@ -1,4 +1,4 @@
-module github.com/cgxarrie-go/andor.git
+module github.com/cgxarrie-go/andor
 
 go 1.21.2
 

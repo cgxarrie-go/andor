@@ -1,6 +1,6 @@
 package andor
 
-import "github.com/cgxarrie-go/andor.git/elementtype"
+import "github.com/cgxarrie-go/andor/elementtype"
 
 type andor[T any] struct {
 	element   element[T]

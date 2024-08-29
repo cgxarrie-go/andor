@@ -21,7 +21,7 @@ Any And or Or element can include Items, And element or Or elements
 
 ```Go
 
-import "github.com/cgxarrie-go/andor.git"
+import "github.com/cgxarrie-go/andor"
 
 func main() {
 

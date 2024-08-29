@@ -3,7 +3,7 @@ Simple module to combine and and or conditions
 
 ## Add AndOr to your project
 
-go get github.com/cgxarrie-go/andor.git
+go get github.com/cgxarrie-go/andor
 
 ## How to use AndOr
 

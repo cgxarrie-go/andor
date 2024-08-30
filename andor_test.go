@@ -28,20 +28,21 @@ func Test_MatchItem(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			// Arrange
-			andor := andor[int16]{
-				element: element[int16]{
+			andor := andor[int]{
+				element: element{
 					elementType: elementtype.Item,
 					item:        1,
 				},
-				matchFunc: func(item int16) bool {
+				matchFunc: func(item int) bool {
 					return test.funcRetrurn
 				},
 			}
 
 			// Act
-			got := andor.Match()
+			got, err := andor.Match()
 
 			// Assert
+			assert.NoError(t, err)
 			assert.Equal(t, test.want, got)
 		})
 	}
@@ -49,13 +50,13 @@ func Test_MatchItem(t *testing.T) {
 
 func Test_MatchAnd_AllTrue_ShouldReturnTrue(t *testing.T) {
 	// Arrange
-	andor := andor[int16]{
-		matchFunc: func(item int16) bool {
+	andor := andor[int]{
+		matchFunc: func(item int) bool {
 			return item%2 == 0
 		},
-		element: element[int16]{
+		element: element{
 			elementType: elementtype.And,
-			elements: []element[int16]{
+			elements: []element{
 				{
 					elementType: elementtype.Item,
 					item:        2,
@@ -69,21 +70,22 @@ func Test_MatchAnd_AllTrue_ShouldReturnTrue(t *testing.T) {
 	}
 
 	// Act
-	got := andor.Match()
+	got, err := andor.Match()
 
 	// Assert
+	assert.NoError(t, err)
 	assert.Equal(t, true, got)
 }
 
 func Test_MatchAnd_OneFalse_ShouldReturnFalse(t *testing.T) {
 	// Arrange
-	andor := andor[int16]{
-		matchFunc: func(item int16) bool {
+	andor := andor[int]{
+		matchFunc: func(item int) bool {
 			return item%2 == 0
 		},
-		element: element[int16]{
+		element: element{
 			elementType: elementtype.And,
-			elements: []element[int16]{
+			elements: []element{
 				{
 					elementType: elementtype.Item,
 					item:        2,
@@ -97,21 +99,22 @@ func Test_MatchAnd_OneFalse_ShouldReturnFalse(t *testing.T) {
 	}
 
 	// Act
-	got := andor.Match()
+	got, err := andor.Match()
 
 	// Assert
+	assert.NoError(t, err)
 	assert.Equal(t, false, got)
 }
 
 func Test_MatchOr_OneTrue_ShouldReturnTrue(t *testing.T) {
 	// Arrange
-	andor := andor[int16]{
-		matchFunc: func(item int16) bool {
+	andor := andor[int]{
+		matchFunc: func(item int) bool {
 			return item%2 == 0
 		},
-		element: element[int16]{
+		element: element{
 			elementType: elementtype.Or,
-			elements: []element[int16]{
+			elements: []element{
 				{
 					elementType: elementtype.Item,
 					item:        1,
@@ -125,21 +128,22 @@ func Test_MatchOr_OneTrue_ShouldReturnTrue(t *testing.T) {
 	}
 
 	// Act
-	got := andor.Match()
+	got, err := andor.Match()
 
 	// Assert
+	assert.NoError(t, err)
 	assert.Equal(t, true, got)
 }
 
 func Test_MatchOr_AllFalse_ShouldReturnFalse(t *testing.T) {
 	// Arrange
-	andor := andor[int16]{
-		matchFunc: func(item int16) bool {
+	andor := andor[int]{
+		matchFunc: func(item int) bool {
 			return item%2 == 0
 		},
-		element: element[int16]{
+		element: element{
 			elementType: elementtype.Or,
-			elements: []element[int16]{
+			elements: []element{
 				{
 					elementType: elementtype.Item,
 					item:        1,
@@ -153,8 +157,9 @@ func Test_MatchOr_AllFalse_ShouldReturnFalse(t *testing.T) {
 	}
 
 	// Act
-	got := andor.Match()
+	got, err := andor.Match()
 
 	// Assert
+	assert.NoError(t, err)
 	assert.Equal(t, false, got)
 }

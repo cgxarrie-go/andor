@@ -29,19 +29,19 @@ func main() {
         return i%2 == 0
     }
     
-    condition := andor.New[int16](fn,
+    condition := andor.New[int16](matchFn,
         andor.And[int16](
-            andor.Item[int16](2),
-                andor.Or[int16](
-                    andor.Item[int16](4),
-                    andor.Item[int16](5),
-                    andor.And[int16](
-                        andor.Item[int16](6),
-                        andor.Item[int16](8),
-                        andor.Item[int16](10),
-                    ),
+        andor.Item[int16](2),
+            andor.Or[int16](
+                andor.Item[int16](4),
+                andor.Item[int16](5),
+                andor.And[int16](
+                    andor.Item[int16](6),
+                    andor.Item[int16](8),
+                    andor.Item[int16](10),
                 ),
-            ))
+            ),
+        ))
 
     result := condition.Match()
 

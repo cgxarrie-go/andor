@@ -105,7 +105,7 @@ func (ao andor[T]) Match() (bool, error) {
 func (ao andor[T]) validate(e any) error {
 
 	if e == nil {
-		return errors.New("nil elemnt")
+		return errors.New("nil element")
 	}
 
 	switch e.(type) {

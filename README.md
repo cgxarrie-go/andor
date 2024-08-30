@@ -13,8 +13,11 @@ go get github.com/cgxarrie-go/andor
 
 The response has 2 elements
 - boolean:
-    * false** when error is not nil, or the match function returns false for any item
-    * true when error is nil and the match function returns true for all items
+    * false when 
+        * error is not nil
+        * the match function returns false for any item
+        * the match function return error for any item
+    * true in any other case
 - error: 
     * nil when all the added elements match the AndOr generic type
     * not nil when any of the added elements does not match the AndOr generic type
@@ -34,8 +37,8 @@ import "github.com/cgxarrie-go/andor"
 
 func main() {
 
-    matchFn := func(i int) bool {
-        return i%2 == 0
+    matchFn := func(i int) (bool, error) {
+        return i%2 == 0, nil
     }
     
     condition := andor.New[int](matchFn,

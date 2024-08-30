@@ -33,8 +33,8 @@ func Test_MatchItem(t *testing.T) {
 					elementType: elementtype.Item,
 					item:        1,
 				},
-				matchFunc: func(item int) bool {
-					return test.funcRetrurn
+				matchFunc: func(item int) (bool, error) {
+					return test.funcRetrurn, nil
 				},
 			}
 
@@ -51,8 +51,8 @@ func Test_MatchItem(t *testing.T) {
 func Test_MatchAnd_AllTrue_ShouldReturnTrue(t *testing.T) {
 	// Arrange
 	andor := andor[int]{
-		matchFunc: func(item int) bool {
-			return item%2 == 0
+		matchFunc: func(item int) (bool, error) {
+			return item%2 == 0, nil
 		},
 		element: element{
 			elementType: elementtype.And,
@@ -80,8 +80,8 @@ func Test_MatchAnd_AllTrue_ShouldReturnTrue(t *testing.T) {
 func Test_MatchAnd_OneFalse_ShouldReturnFalse(t *testing.T) {
 	// Arrange
 	andor := andor[int]{
-		matchFunc: func(item int) bool {
-			return item%2 == 0
+		matchFunc: func(item int) (bool, error) {
+			return item%2 == 0, nil
 		},
 		element: element{
 			elementType: elementtype.And,
@@ -109,8 +109,8 @@ func Test_MatchAnd_OneFalse_ShouldReturnFalse(t *testing.T) {
 func Test_MatchOr_OneTrue_ShouldReturnTrue(t *testing.T) {
 	// Arrange
 	andor := andor[int]{
-		matchFunc: func(item int) bool {
-			return item%2 == 0
+		matchFunc: func(item int) (bool, error) {
+			return item%2 == 0, nil
 		},
 		element: element{
 			elementType: elementtype.Or,
@@ -138,8 +138,8 @@ func Test_MatchOr_OneTrue_ShouldReturnTrue(t *testing.T) {
 func Test_MatchOr_AllFalse_ShouldReturnFalse(t *testing.T) {
 	// Arrange
 	andor := andor[int]{
-		matchFunc: func(item int) bool {
-			return item%2 == 0
+		matchFunc: func(item int) (bool, error) {
+			return item%2 == 0, nil
 		},
 		element: element{
 			elementType: elementtype.Or,

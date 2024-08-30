@@ -9,7 +9,7 @@ import (
 
 type andor[T any] struct {
 	element   element
-	matchFunc func(item T) bool
+	matchFunc func(item T) (bool, error)
 }
 
 type element struct {
@@ -18,7 +18,7 @@ type element struct {
 	item        any
 }
 
-func New[T any](matchFunc func(T) bool, element element) andor[T] {
+func New[T any](matchFunc func(T) (bool, error), element element) andor[T] {
 
 	return andor[T]{
 		element:   element,
@@ -98,7 +98,7 @@ func (ao andor[T]) Match() (bool, error) {
 		return false, err
 	}
 
-	return ao.matchElement(ao.element), nil
+	return ao.matchElement(ao.element)
 
 }
 
@@ -135,7 +135,7 @@ func (ao andor[T]) validate(e any) error {
 	}
 }
 
-func (ao andor[T]) matchElement(e element) bool {
+func (ao andor[T]) matchElement(e element) (bool, error) {
 
 	switch e.elementType {
 	case elementtype.And:
@@ -148,25 +148,30 @@ func (ao andor[T]) matchElement(e element) bool {
 	}
 }
 
-func (ao andor[T]) matchAnd(elements []element) bool {
+func (ao andor[T]) matchAnd(elements []element) (bool, error) {
 
 	for _, e := range elements {
-		if match := ao.matchElement(e); !match {
-			return false
+		match, err := ao.matchElement(e)
+		if err != nil || !match {
+			return false, err
 		}
 	}
 
-	return true
+	return true, nil
 
 }
 
-func (ao andor[T]) matchOr(elements []element) bool {
+func (ao andor[T]) matchOr(elements []element) (bool, error) {
 	for _, e := range elements {
-		if match := ao.matchElement(e); match {
-			return true
+		match, err := ao.matchElement(e)
+		if err != nil {
+			return false, err
+		}
+		if match {
+			return true, nil
 		}
 	}
 
-	return false
+	return false, nil
 
 }

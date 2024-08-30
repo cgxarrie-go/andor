@@ -1,116 +1,95 @@
 package andor_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/cgxarrie-go/andor"
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_And_True(t *testing.T) {
+func Test_FnReturningError_False(t *testing.T) {
 	// Arrange
-	fn := func(i int16) bool {
-		return i%2 == 0
+	fn := func(i int) (bool, error) {
+		return i%2 == 0,
+			fmt.Errorf("error from func")
 	}
 
-	rootCondition := andor.New[int16](fn,
-		andor.And[int16](
-			andor.Item[int16](2),
-			andor.Or[int16](
-				andor.Item[int16](4),
-				andor.Item[int16](5),
-				andor.And[int16](
-					andor.Item[int16](6),
-					andor.Item[int16](8),
-					andor.Item[int16](10),
-				),
-			),
-		))
+	rootCondition := andor.New[int](fn,
+		andor.And(2, andor.Or(4, 5, andor.And(6, 8, 10))))
 
 	// Act
-	got := rootCondition.Match()
+	got, err := rootCondition.Match()
 
 	// Assert
+	assert.ErrorContains(t, err, "error from func")
+	assert.False(t, got)
+}
+
+func Test_And_True(t *testing.T) {
+	// Arrange
+	fn := func(i int) (bool, error) {
+		return i%2 == 0, nil
+	}
+
+	rootCondition := andor.New[int](fn,
+		andor.And(2, andor.Or(4, 5, andor.And(6, 8, 10))))
+
+	// Act
+	got, err := rootCondition.Match()
+
+	// Assert
+	assert.NoError(t, err)
 	assert.True(t, got)
 }
 
 func Test_And_False(t *testing.T) {
 	// Arrange
-	fn := func(i int16) bool {
-		return i%2 == 0
+	fn := func(i int) (bool, error) {
+		return i%2 == 0, nil
 	}
 
-	rootCondition := andor.New[int16](fn,
-		andor.And[int16](
-			andor.Item[int16](2),
-			andor.Or[int16](
-				andor.Item[int16](3),
-				andor.Item[int16](5),
-				andor.And[int16](
-					andor.Item[int16](1),
-					andor.Item[int16](8),
-					andor.Item[int16](10),
-				),
-			),
-		))
+	rootCondition := andor.New[int](fn,
+		andor.And(2, andor.Or(3, 5, andor.And(1, 8, 10))))
 
 	// Act
-	got := rootCondition.Match()
+	got, err := rootCondition.Match()
 
 	// Assert
+	assert.NoError(t, err)
 	assert.False(t, got)
 }
 
 func Test_Or_True(t *testing.T) {
 	// Arrange
-	fn := func(i int16) bool {
-		return i%2 == 0
+	fn := func(i int) (bool, error) {
+		return i%2 == 0, nil
 	}
 
-	rootCondition := andor.New[int16](fn,
-		andor.Or[int16](
-			andor.Item[int16](2),
-			andor.Or[int16](
-				andor.Item[int16](4),
-				andor.Item[int16](5),
-				andor.And[int16](
-					andor.Item[int16](6),
-					andor.Item[int16](8),
-					andor.Item[int16](10),
-				),
-			),
-		))
+	rootCondition := andor.New[int](fn,
+		andor.Or(2, andor.Or(4, 5, andor.And(6, 8, 10))))
 
 	// Act
-	got := rootCondition.Match()
+	got, err := rootCondition.Match()
 
 	// Assert
+	assert.NoError(t, err)
 	assert.True(t, got)
 }
 
 func Test_Or_False(t *testing.T) {
 	// Arrange
-	fn := func(i int16) bool {
-		return i%2 == 0
+	fn := func(i int) (bool, error) {
+		return i%2 == 0, nil
 	}
 
-	rootCondition := andor.New[int16](fn,
-		andor.Or[int16](
-			andor.Item[int16](1),
-			andor.Or[int16](
-				andor.Item[int16](1),
-				andor.Item[int16](3),
-				andor.And[int16](
-					andor.Item[int16](5),
-					andor.Item[int16](7),
-					andor.Item[int16](8),
-				),
-			),
-		))
+	rootCondition := andor.New[int](fn,
+		andor.Or(1, andor.Or(1, 3, andor.And(5, 7, 8))))
 
 	// Act
-	got := rootCondition.Match()
+	got, err := rootCondition.Match()
 
 	// Assert
+	assert.NoError(t, err)
 	assert.False(t, got)
 }
